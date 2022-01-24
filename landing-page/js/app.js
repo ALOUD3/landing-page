@@ -23,9 +23,9 @@
  * 
 */
 
-const sections = Array.from(document.querySelectorAll('section')); //make an array aand put all sections though it
-const menu = document.getElementById('navbar__list'); 
-let numberofListItems = sections.length;  //dont know use fo it yet
+const sections = document.querySelectorAll('section'); //make an array aand put all sections though it
+const navArray = document.getElementById('navbar__list'); 
+
 
 
 
@@ -37,40 +37,44 @@ let numberofListItems = sections.length;  //dont know use fo it yet
  * 
 */
 
-// function listItems() {
-//     for (section of sections) {
-//         sectionName = section.getAttribute('data-nav');
-//         sectionLink = section.getAttribute('id');
-
-//         listItem = document.createElement('li');
-
-//         listItem.innerHTML = `<a class='menu__link' href='#${sectionLink}'>${sectionName}</a>`;
-
-//         menu.appendChild(listItem);
 
 
-//     }
-// }
-
-function listItems(section){
-    for( let i=0; i< sections.length; i++){
-      // rest of the code will be same here...
-      sectionName = section.getAttribute('data-nav');
-      sectionLink = section.getAttribute('id');
-
-      listItem = document.createElement('li');
-
-      listItem.innerHTML = `<a class='menu__link' href='#${sectionLink}'>${sectionName}</a>`;
-
-      menu.appendChild(listItem);
-
-
-
-    }
+function listItems(){
+  for(i=0; i<sections.length; i++){
+    let list=document.createElement("li");
+    let navLinks=document.createElement("a");
+    navLinks.textContent=section[i].id;
+    navLinks.setAttribute("href", section[i].dataset.nav);
+    list.appendChild(navLinks)
+    navArray.appendChild(list)
   }
+}
 
 
 
+
+
+function youActiveClass(){
+  for (const section of sections ){
+      const containers = section.getBoundingClientRect();
+      if (containers.top <= 150 && containers.bottom >= 150){
+          section.classList.add('your-active-class');
+      } else {
+          section.classList.remove('your-active-class');
+      }
+  }
+}
+
+
+
+
+
+document.addEventListener("scroll", function() {
+  youActiveClass();
+});
+
+
+listItems()
 
 /**
  * End Helper Functions
